@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const EstudianteClaseGrupoController_1 = require("../controllers/EstudianteClaseGrupoController");
+const estudianteClaseGrupoController = new EstudianteClaseGrupoController_1.EstudianteClaseGrupoController();
+const router = (0, express_1.Router)();
+router.get("/", estudianteClaseGrupoController.getAllEstudiantesClaseGrupo.bind(estudianteClaseGrupoController));
+router.post("/", estudianteClaseGrupoController.createEstudianteClaseGrupo.bind(estudianteClaseGrupoController));
+router.delete("/:id_grupo/:id_estudiante", (req, res, next) => estudianteClaseGrupoController.deleteEstudianteClaseGrupo(req, res, next));
+exports.default = router;

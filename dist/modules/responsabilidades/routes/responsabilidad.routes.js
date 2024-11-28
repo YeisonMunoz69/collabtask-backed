@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const ResponsabilidadController_1 = require("../controllers/ResponsabilidadController");
+const router = (0, express_1.Router)();
+const responsabilidadController = new ResponsabilidadController_1.ResponsabilidadController();
+router.get("/", (req, res) => responsabilidadController.getAllResponsabilidades(req, res));
+router.post("/", (req, res) => responsabilidadController.createResponsabilidad(req, res));
+router.put("/:id_responsabilidad", (req, res) => responsabilidadController.updateResponsabilidad(req, res));
+router.delete("/:id_responsabilidad", (req, res) => responsabilidadController.deleteResponsabilidad(req, res));
+exports.default = router;

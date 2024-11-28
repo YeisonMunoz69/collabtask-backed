@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const TareaController_1 = require("../controllers/TareaController");
+const tareaController = new TareaController_1.TareaController();
+const router = (0, express_1.Router)();
+router.get("/", tareaController.getAllTareas.bind(tareaController));
+router.post("/", tareaController.createTarea.bind(tareaController));
+router.get("/:id_tarea", (req, res, next) => tareaController.getTareaById(req, res, next));
+router.delete("/:id", tareaController.deleteTarea.bind(tareaController));
+exports.default = router;

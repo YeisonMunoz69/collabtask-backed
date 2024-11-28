@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const ComentarioController_1 = require("../controllers/ComentarioController");
+const router = (0, express_1.Router)();
+const comentarioController = new ComentarioController_1.ComentarioController();
+router.get("/:id_grupo", (req, res, next) => comentarioController.getComentariosByGrupo(req, res, next));
+router.post("/", (req, res, next) => comentarioController.createComentario(req, res, next));
+router.delete("/:id_comentario", (req, res, next) => comentarioController.deleteComentario(req, res, next));
+exports.default = router;
