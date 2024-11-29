@@ -18,6 +18,22 @@ export class TareaService {
         return await this.tareaRepository.findOne({ where: { id_tarea }, relations: ["clase"] });
     }
 
+    async getTareasByClaseId(id_clase: number): Promise<Tarea[]> {
+        // Verificar si la clase existe
+        const clase = await this.claseRepository.findOne({ where: { id_clase } });
+        if (!clase) {
+            throw new Error("Clase no encontrada.");
+        }
+    
+        // Obtener todas las tareas relacionadas con la clase
+        const tareas = await this.tareaRepository.find({
+            where: { clase: { id_clase } },
+            relations: ["clase"], // Opcional, incluye detalles de la clase si son necesarios
+        });
+    
+        return tareas;
+    }    
+
     async createTarea(data: Partial<Tarea>): Promise<Tarea> {
         // Verificar que la clase exista
         const clase = await this.claseRepository.findOne({ where: { id_clase: data.clase?.id_clase } });

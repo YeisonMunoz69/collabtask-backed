@@ -26,6 +26,18 @@ class TareaController {
             }
         });
     }
+    getTareasByClaseId(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id_clase } = req.params;
+                const tareas = yield this.tareaService.getTareasByClaseId(Number(id_clase));
+                res.json(tareas);
+            }
+            catch (error) {
+                res.status(400).json({ message: error.message });
+            }
+        });
+    }
     createTarea(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { TareaService } from "../services/TareaService";
-
+import { errorHandler } from "../../../utils/errorHandler";
 export class TareaController {
     private tareaService: TareaService;
 
@@ -16,6 +16,17 @@ export class TareaController {
             res.status(400).json({ message: (error as Error).message });
         }
     }
+
+    async getTareasByClaseId(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { id_clase } = req.params;
+            const tareas = await this.tareaService.getTareasByClaseId(Number(id_clase));
+            res.json(tareas);
+        } catch (error: unknown) {
+            res.status(400).json({ message: (error as Error).message });
+        }
+    }
+    
 
     async createTarea(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {

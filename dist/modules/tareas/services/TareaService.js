@@ -35,6 +35,21 @@ class TareaService {
             return yield this.tareaRepository.findOne({ where: { id_tarea }, relations: ["clase"] });
         });
     }
+    getTareasByClaseId(id_clase) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Verificar si la clase existe
+            const clase = yield this.claseRepository.findOne({ where: { id_clase } });
+            if (!clase) {
+                throw new Error("Clase no encontrada.");
+            }
+            // Obtener todas las tareas relacionadas con la clase
+            const tareas = yield this.tareaRepository.find({
+                where: { clase: { id_clase } },
+                relations: ["clase"], // Opcional, incluye detalles de la clase si son necesarios
+            });
+            return tareas;
+        });
+    }
     createTarea(data) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
