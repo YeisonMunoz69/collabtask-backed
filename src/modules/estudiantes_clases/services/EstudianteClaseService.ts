@@ -64,6 +64,7 @@ export class EstudianteClaseService {
     
         return nuevaRelacion;
     }
+      
     
     async removeEstudianteFromClase(id_clase: number, id_estudiante: number): Promise<boolean> {
         const result = await this.estudianteClaseRepository.delete({

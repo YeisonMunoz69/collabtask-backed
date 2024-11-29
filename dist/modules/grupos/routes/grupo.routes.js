@@ -12,4 +12,6 @@ router.post("/", validateGrupoMiddleware_1.validateGrupoMiddleware, (req, res, n
 router.put("/:id", validateGrupoMiddleware_1.validateGrupoMiddleware, (req, res, next) => grupoController.updateGrupo(req, res, next));
 router.delete("/:id", (req, res, next) => grupoController.deleteGrupo(req, res, next));
 router.put("/:id_grupo/lider", (req, res, next) => grupoController.assignLider(req, res, next));
+router.get("/:id_grupo/estudiantes", grupoController.getEstudiantesByGrupoId.bind(grupoController));
+router.get("/clase/:id_clase/tarea/:id_tarea", grupoController.getGruposByClaseAndTarea.bind(grupoController));
 exports.default = router;

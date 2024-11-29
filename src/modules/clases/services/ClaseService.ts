@@ -1,6 +1,7 @@
 import AppDataSource from "../../../config/database";
 import { Clase } from "../entities/Clase";
 import { Profesor } from "../../profesores/entities/Profesor";
+import { EstudianteClase } from "../../estudiantes_clases/entities/EstudianteClase";
 
 export class ClaseService {
     private claseRepository = AppDataSource.getRepository(Clase);
@@ -66,6 +67,7 @@ export class ClaseService {
         return profesor.clases;
     }
 
+    
     async updateClase(id: number, data: Partial<Clase>): Promise<Clase | null> {
         const clase = await this.claseRepository.findOneBy({ id_clase: id });
         if (!clase) {

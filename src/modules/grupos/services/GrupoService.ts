@@ -26,6 +26,40 @@ export class GrupoService {
         return grupo;
     }
     
+    async getEstudiantesByGrupoId(id_grupo: number): Promise<EstudianteClaseGrupo[]> {
+        // Buscar todas las relaciones de estudiantes en el grupo
+        const estudiantesEnGrupo = await this.estudianteClaseGrupoRepository.find({
+            where: { id_grupo },
+            relations: [
+                "estudianteClase",
+                "estudianteClase.estudiante", // Relación directa para acceder al estudiante
+            ],
+        });
+    
+        if (!estudiantesEnGrupo.length) {
+            throw new Error("No hay estudiantes en este grupo o el grupo no existe");
+        }
+    
+        return estudiantesEnGrupo;
+    }
+
+    async getGruposByClaseAndTarea(id_clase: number, id_tarea: number): Promise<Grupo[]> {
+        // Buscar grupos relacionados con la tarea y clase
+        const grupos = await this.grupoRepository.find({
+            where: {
+                tarea: { id_tarea, clase: { id_clase } },
+            },
+            relations: ["tarea", "tarea.clase"],
+        });
+    
+        if (!grupos.length) {
+            throw new Error("No se encontraron grupos para la clase y tarea especificadas");
+        }
+    
+        return grupos;
+    }
+    
+    
     async createGrupo(data: Partial<Grupo>): Promise<Grupo> {
         const tarea = await this.tareaRepository.findOne({ where: { id_tarea: data.tarea?.id_tarea } });
         if (!tarea) {

@@ -42,6 +42,37 @@ class GrupoService {
             return grupo;
         });
     }
+    getEstudiantesByGrupoId(id_grupo) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Buscar todas las relaciones de estudiantes en el grupo
+            const estudiantesEnGrupo = yield this.estudianteClaseGrupoRepository.find({
+                where: { id_grupo },
+                relations: [
+                    "estudianteClase",
+                    "estudianteClase.estudiante", // Relación directa para acceder al estudiante
+                ],
+            });
+            if (!estudiantesEnGrupo.length) {
+                throw new Error("No hay estudiantes en este grupo o el grupo no existe");
+            }
+            return estudiantesEnGrupo;
+        });
+    }
+    getGruposByClaseAndTarea(id_clase, id_tarea) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // Buscar grupos relacionados con la tarea y clase
+            const grupos = yield this.grupoRepository.find({
+                where: {
+                    tarea: { id_tarea, clase: { id_clase } },
+                },
+                relations: ["tarea", "tarea.clase"],
+            });
+            if (!grupos.length) {
+                throw new Error("No se encontraron grupos para la clase y tarea especificadas");
+            }
+            return grupos;
+        });
+    }
     createGrupo(data) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;

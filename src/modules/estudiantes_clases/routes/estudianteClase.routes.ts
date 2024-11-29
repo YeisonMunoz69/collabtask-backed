@@ -11,5 +11,4 @@ router.put("/:id_clase/:id_estudiante", (req, res, next) => estudianteClaseContr
 router.delete("/:id_clase/:id_estudiante", (req, res, next) =>
     estudianteClaseController.removeEstudianteFromClase(req, res, next)
 );
-
 export default router;
